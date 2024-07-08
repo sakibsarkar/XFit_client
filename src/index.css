@@ -3,6 +3,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .center {
+    @apply flex justify-center items-center;
+  }
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -78,4 +84,8 @@
 
 body {
   font-family: "Quicksand", sans-serif;
+}
+.gridResponsive {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 200px));
 }
