@@ -87,5 +87,17 @@ body {
 }
 .gridResponsive {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(100px, 200px));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+.griProductResponsive {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+}
+
+.react-photo-album--photo {
+  transition: 0.3s;
+}
+.react-photo-album--photo:hover {
+  transform: scale(1.03);
+  border-radius: 10px;
 }
