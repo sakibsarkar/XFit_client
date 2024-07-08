@@ -1,14 +1,16 @@
-export type TMovie = {
-  _id: string;
-  title: string;
-  description: string;
-  releaseDate: Date;
-  genre: string;
-  director: string;
-  cast: string;
-  slug: string;
-  viewCount: number;
-  totalRating: number;
-  isDeleted: boolean;
+import { IconType } from "react-icons/lib";
+
+export interface ICategory {
+  label: string;
+  Icon: IconType;
+}
+export interface IProduct {
   image: string;
-};
+  title: string;
+  price: number;
+  stock: number;
+  details: string;
+  category: string;
+  _id: string;
+  tag?: string;
+}

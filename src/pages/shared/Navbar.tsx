@@ -17,7 +17,7 @@ const navLinks = [
   },
   {
     lebel: "Product",
-    href: "/sf",
+    href: "/product",
   },
   {
     lebel: "Contact",

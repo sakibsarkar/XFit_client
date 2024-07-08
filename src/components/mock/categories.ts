@@ -1,3 +1,4 @@
+import { ICategory } from "@/types";
 import {
   FaBicycle,
   FaChild,
@@ -10,12 +11,6 @@ import {
   FaTshirt,
   FaYoast,
 } from "react-icons/fa";
-import { IconType } from "react-icons/lib";
-
-export interface ICategory {
-  label: string;
-  Icon: IconType;
-}
 
 export const categories: ICategory[] = [
   { label: "Cardio Equipment", Icon: FaRunning },
