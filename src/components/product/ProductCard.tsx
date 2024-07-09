@@ -1,15 +1,17 @@
 import { IProduct } from "@/types";
 import { trimText } from "@/utils/trimText";
+import { MdOutlineRemoveShoppingCart } from "react-icons/md";
 import { Link } from "react-router-dom";
 import ProductAddToCartBtn from "./ProductAddToCartBtn";
 import ProductTooltip from "./ProductTooltip";
-
 interface ProductCardProps {
   // product: IProduct;
   product: IProduct;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+  const stock = product.stock;
+
   return (
     <div className="relative w-full h-[370px]  overflow-hidden rounded-[15px] border-[1px] border-borderColor bg-white">
       {product.tag && (
@@ -21,18 +23,17 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       )}
       <div className="w-full h-[200px] relative group/image cursor-pointer">
         <img
-          className="w-full h-full object-cover"
+          className={`w-full h-full object-cover`}
           src={product.image}
           alt={product.title}
         />
 
-        <ProductTooltip product={product} />
+        {stock ? <ProductTooltip product={product} /> : ""}
       </div>
       <div className="px-4 py-4">
         <div className="text-sm text-gray-500">{product.category}</div>
-        {/* <Link href={`/product/details/${product._id}`} className="font-bold text-xl mb-2 hover:underline"> */}
         <Link
-          to={`/product/details/${product._id}`}
+          to={`/product/${product._id}`}
           className="font-bold text-xl mb-2 hover:underline"
         >
           {trimText(product.title, 20)}
@@ -49,15 +50,21 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           </div>
         </div>
       </div>
-      <div className="w-full center gap-[10px] px-[10px]">
-        <Link
-          className="w-full border-[1px] border-primaryMat center gap-[5px] rounded-[5px] ] mx-auto  text-primaryMat font-bold py-2 prounded hover:bg-primaryMat hover:text-white"
-          to={`porduct/${product._id}`}
-        >
-          View
-        </Link>
-        <ProductAddToCartBtn product={product} />
-      </div>
+      {product.stock ? (
+        <div className="w-full center gap-[10px] px-[10px]">
+          <Link
+            className="w-full border-[1px] border-primaryMat center gap-[5px] rounded-[5px] ] mx-auto  text-primaryMat font-bold py-2 prounded hover:bg-primaryMat hover:text-white"
+            to={`/product/${product._id}`}
+          >
+            View
+          </Link>
+          <ProductAddToCartBtn product={product} />
+        </div>
+      ) : (
+        <span className="bg-[#ff6d6d] w-[90%] mx-auto py-[8px] center gap-[8px] cursor-not-allowed rounded-[5px] text-white">
+          <MdOutlineRemoveShoppingCart /> STOCK OUT
+        </span>
+      )}
     </div>
   );
 };

@@ -51,7 +51,18 @@ const productAPI = baseApi.injectEndpoints({
       },
       providesTags: ["product"],
     }),
+    getProductById: builder.query<{ data: IProduct }, string>({
+      query: (productId) => ({
+        url: `/product/get/${productId}`,
+        method: "GET",
+      }),
+      providesTags: ["product"],
+    }),
   }),
 });
 
-export const { useCreateProductMutation, useGetAllProductQuery } = productAPI;
+export const {
+  useCreateProductMutation,
+  useGetAllProductQuery,
+  useGetProductByIdQuery,
+} = productAPI;

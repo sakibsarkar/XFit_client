@@ -1,12 +1,16 @@
 "use client";
 
+import { addItemToCart } from "@/redux/features/cart/cart.slice";
+import { useAppDispatch } from "@/redux/hooks";
 import { IProduct } from "@/types";
 import { Eye, ReceiptText, ShoppingCart } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const ProductTooltip = ({ product }: { product: IProduct }) => {
+  const dispatch = useAppDispatch();
+
   const handleAddToCart = () => {
-    console.log(product);
+    dispatch(addItemToCart(product));
   };
   return (
     <div

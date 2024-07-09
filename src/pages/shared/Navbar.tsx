@@ -5,7 +5,8 @@ import {
   NavigationMenuList,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { Menu, X } from "lucide-react";
+import { useAppSelector } from "@/redux/hooks";
+import { LucideShoppingCart, Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 // import { Link } from "@radix-ui/react-navigation-menu";
 import { Link, NavLink } from "react-router-dom";
@@ -35,6 +36,7 @@ const navLinks = [
 
 export default function Navbar() {
   const [showSidebar, setShowSidebar] = useState(false);
+  const { items, total } = useAppSelector((state) => state.cart);
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
       // event target
@@ -72,29 +74,42 @@ export default function Navbar() {
         <Link to="/" className="flex items-center">
           <img src="/images/logo.png" className="w-[120px]" />
         </Link>
-        <NavigationMenu className="hidden md:flex">
-          <NavigationMenuList>
-            <div className="flex justify-end">
-              <NavigationMenuItem>
-                {navLinks.map(({ href, lebel }, i) => (
-                  <Link to={href} key={i}>
-                    <NavigationMenuLink
-                      className={navigationMenuTriggerStyle()}
-                    >
-                      {lebel}
-                    </NavigationMenuLink>
-                  </Link>
-                ))}
-              </NavigationMenuItem>
-            </div>
-          </NavigationMenuList>
-        </NavigationMenu>
-        <button
-          onClick={() => setShowSidebar(!showSidebar)}
-          className="md:hidden flex menuBTn"
-        >
-          {showSidebar ? <X /> : <Menu />}
-        </button>
+        <div className="center w-fit gap-[15px]">
+          <NavigationMenu className="hidden md:flex">
+            <NavigationMenuList>
+              <div className="flex justify-end">
+                <NavigationMenuItem>
+                  {navLinks.map(({ href, lebel }, i) => (
+                    <Link to={href} key={i}>
+                      <NavigationMenuLink
+                        className={navigationMenuTriggerStyle()}
+                      >
+                        {lebel}
+                      </NavigationMenuLink>
+                    </Link>
+                  ))}
+                </NavigationMenuItem>
+              </div>
+            </NavigationMenuList>
+          </NavigationMenu>
+          <div className="center gap-[10px]">
+            <Link to={"/cart"} className="text-primaryTxt relative">
+              <LucideShoppingCart />
+              <span className="absolute text-[12px] top-[-14px] right-[-10px] text-white bg-primaryMat shadow-md px-[5px] py-[3px] rounded-[8px]">
+                {items.length}
+              </span>
+            </Link>
+            <span className="font-[600] text-primaryMat">
+              ${total.toFixed(2)}
+            </span>
+          </div>{" "}
+          <button
+            onClick={() => setShowSidebar(!showSidebar)}
+            className="md:hidden flex menuBTn"
+          >
+            {showSidebar ? <X /> : <Menu />}
+          </button>
+        </div>
 
         {/* sidebar */}
         <div

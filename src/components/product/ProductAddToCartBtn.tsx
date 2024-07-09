@@ -1,11 +1,14 @@
 "use client";
 
+import { addItemToCart } from "@/redux/features/cart/cart.slice";
+import { useAppDispatch } from "@/redux/hooks";
 import { IProduct } from "@/types";
 import { ShoppingCart } from "lucide-react";
 
 const ProductAddToCartBtn = ({ product }: { product: IProduct }) => {
+  const dispatch = useAppDispatch();
   const handleAddToCart = () => {
-    console.log(product);
+    dispatch(addItemToCart(product));
   };
   return (
     <button
