@@ -8,7 +8,6 @@ import {
 import { useAppSelector } from "@/redux/hooks";
 import { LucideShoppingCart, Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
-// import { Link } from "@radix-ui/react-navigation-menu";
 import { Link, NavLink } from "react-router-dom";
 
 const navLinks = [

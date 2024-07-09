@@ -15,16 +15,27 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { removeFromCart } from "@/redux/features/cart/cart.slice";
+import {
+  decreaseQuantity,
+  increaseQuantity,
+  removeFromCart,
+} from "@/redux/features/cart/cart.slice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { trimText } from "@/utils/trimText";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Cart() {
   const { items, total } = useAppSelector((state) => state.cart);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const handleRemoveFromCart = (productId: string) => {
     dispatch(removeFromCart(productId));
+  };
+
+  const handleCheckout = () => {
+    if (items.length) {
+      navigate("/checkout");
+    }
   };
 
   return (
@@ -77,7 +88,27 @@ export default function Cart() {
                           {trimText(item.title, 22)}
                         </Link>
                       </TableCell>
-                      <TableCell>{item.quantity}</TableCell>
+                      <TableCell>
+                        <div className="flex items-center justify-start gap-[8px]">
+                          <button
+                            onClick={() => dispatch(decreaseQuantity(item._id))}
+                            className="w-[30px] h-[30px] center bg-primaryMat text-white rounded-[5px]"
+                          >
+                            -
+                          </button>
+                          <span className="bg-muted p-[8px] rounded-[5px]">
+                            {item.quantity}
+                          </span>
+                          <button
+                            className="w-[30px] h-[30px] center bg-primaryMat text-white rounded-[5px]"
+                            onClick={() =>
+                              dispatch(increaseQuantity({ id: item._id }))
+                            }
+                          >
+                            +
+                          </button>
+                        </div>
+                      </TableCell>
                       <TableCell>${item.price.toFixed(2)}</TableCell>
                       <TableCell>
                         ${(item.price * item.quantity).toFixed(2)}
@@ -124,6 +155,7 @@ export default function Cart() {
             <CardFooter>
               <Button
                 size="lg"
+                onClick={handleCheckout}
                 className="w-full bg-primaryMat text-white"
                 disabled={!items.length}
               >

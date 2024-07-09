@@ -58,6 +58,14 @@ const productAPI = baseApi.injectEndpoints({
       }),
       providesTags: ["product"],
     }),
+    orderManyProduct: builder.mutation({
+      query: (payload) => ({
+        url: `/product/order-many`,
+        method: "POST",
+        body: payload,
+      }),
+      invalidatesTags: ["product"],
+    }),
   }),
 });
 
@@ -65,4 +73,5 @@ export const {
   useCreateProductMutation,
   useGetAllProductQuery,
   useGetProductByIdQuery,
+  useOrderManyProductMutation,
 } = productAPI;

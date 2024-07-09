@@ -65,6 +65,42 @@ const cartSlice = createSlice({
         0
       );
     },
+
+    increaseQuantity: (
+      state,
+      action: PayloadAction<{ id: string; quantity?: number }>
+    ) => {
+      const { id, quantity = 1 } = action.payload;
+      const product = state.items.find((item) => item._id === id);
+      if (product) {
+        const willQuantity = product.quantity + quantity;
+        if (willQuantity > product.stock) {
+          toast.error("Maximum product quantity reached");
+        } else {
+          product.quantity = willQuantity;
+          toast.success("Product quantity increased");
+        }
+      }
+      state.total = state.items.reduce(
+        (sum, item) => sum + item.price * item.quantity,
+        0
+      );
+    },
+    decreaseQuantity: (state, action: PayloadAction<string>) => {
+      const id = action.payload;
+      const product = state.items.find((item) => item._id === id);
+      if (!product) return;
+      if (product.quantity === 1) {
+        return;
+      }
+
+      product.quantity -= 1;
+
+      state.total = state.items.reduce(
+        (sum, item) => sum + item.price * item.quantity,
+        0
+      );
+    },
     clearCart: (state) => {
       state.items = [];
       state.total = 0;
@@ -72,5 +108,11 @@ const cartSlice = createSlice({
   },
 });
 
-export const { addItemToCart, removeFromCart, clearCart } = cartSlice.actions;
+export const {
+  addItemToCart,
+  removeFromCart,
+  decreaseQuantity,
+  clearCart,
+  increaseQuantity,
+} = cartSlice.actions;
 export default cartSlice.reducer;
