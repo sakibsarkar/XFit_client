@@ -1,6 +1,6 @@
+// src/components/Product.js
 import ProductCard from "@/components/product/ProductCard";
 import { Button } from "@/components/ui/button";
-
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import {
@@ -22,7 +22,8 @@ import {
 import { useGetAllProductQuery } from "@/redux/features/product/product.api";
 import { IProduct } from "@/types";
 import { capitalized } from "@/utils/capitalizedWord";
-import { useEffect, useState } from "react";
+import debounce from "lodash/debounce";
+import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 export default function Product() {
@@ -77,6 +78,19 @@ export default function Product() {
     setPriceInputState(replica);
   };
 
+  // Debounced search term update
+  const debouncedSetSearchTerm = useMemo(
+    () =>
+      debounce((value: string) => {
+        setSearchTerm(value);
+      }, 300),
+    []
+  );
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    debouncedSetSearchTerm(e.target.value);
+  };
+
   if (isLoading) {
     return <div>loading....</div>;
   }
@@ -93,8 +107,7 @@ export default function Product() {
             <Input
               type="text"
               placeholder="Search products..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={handleSearchChange}
             />
           </div>
           <div>
