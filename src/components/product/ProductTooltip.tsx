@@ -1,8 +1,8 @@
 "use client";
 
+import { IProduct } from "@/types";
 import { Eye, ReceiptText, ShoppingCart } from "lucide-react";
 import { Link } from "react-router-dom";
-import { IProduct } from "../mock/product";
 
 const ProductTooltip = ({ product }: { product: IProduct }) => {
   const handleAddToCart = () => {
@@ -24,7 +24,7 @@ const ProductTooltip = ({ product }: { product: IProduct }) => {
           <ReceiptText />
         </button>
         <Link
-          to={`/product/details/${product._id}`}
+          to={`/product/${product._id}`}
           className="p-[5px] border-r-[1px] border-borderColor hover:bg-[#f0f0f0]"
         >
           <Eye />

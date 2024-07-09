@@ -6,6 +6,7 @@ interface IQueryOptions {
   max?: number;
   sort?: string;
   page?: string | number;
+  category?: string[];
 }
 
 interface IProductResponse {
@@ -24,9 +25,25 @@ const productAPI = baseApi.injectEndpoints({
     }),
     getAllProduct: builder.query<IProductResponse, IQueryOptions>({
       query: (query: IQueryOptions) => {
-        const { max = "", min = "", searchTerm = "", sort = "", page } = query;
+        const {
+          max = "",
+          min = "",
+          searchTerm = "",
+          sort = "",
+          page,
+          category,
+        } = query;
+
+        let categories = "";
+        category?.length &&
+          category.forEach(
+            (e, i) =>
+              (categories = i !== 0 ? categories + "," + e : categories + e)
+          );
+        console.log({ category, categories });
+
         return {
-          url: `/product?searchTerm=${searchTerm}&min=${min}&max=${max}&sort=${sort}&page=${
+          url: `/product?searchTerm=${searchTerm}&min=${min}&max=${max}&sort=${sort}&category=${categories} &page=${
             page || "1"
           }`,
           method: "GET",

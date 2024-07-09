@@ -1,11 +1,9 @@
 "use client";
 
+import { IProduct } from "@/types";
 import { ShoppingCart } from "lucide-react";
-import { IProduct } from "../mock/product";
 
 const ProductAddToCartBtn = ({ product }: { product: IProduct }) => {
-  console.log("Product ID: ", product._id);
-
   const handleAddToCart = () => {
     console.log(product);
   };

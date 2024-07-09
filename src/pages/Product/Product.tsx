@@ -2,6 +2,7 @@ import ProductCard from "@/components/product/ProductCard";
 import { Button } from "@/components/ui/button";
 
 import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
 import {
   Pagination,
   PaginationContent,
@@ -10,27 +11,31 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useGetAllProductQuery } from "@/redux/features/product/product.api";
 import { IProduct } from "@/types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 export default function Product() {
+  const [searchParams] = useSearchParams();
+  const category = searchParams.get("category") || "";
+
+  // filter state
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 0]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [priceInputState, setPriceInputState] = useState<[number, number]>([
     0, 0,
   ]);
+  const [sort, setSort] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
 
   const { data, isLoading, isError } = useGetAllProductQuery({
@@ -38,8 +43,15 @@ export default function Product() {
     max: priceRange[1],
     page: currentPage,
     searchTerm,
+    sort,
+    category: selectedCategories,
   });
-  console.log(data?.data);
+
+  useEffect(() => {
+    if (category) {
+      setSelectedCategories([category]);
+    }
+  }, [category]);
 
   const handleCategoryChange = (category: string) => {
     if (selectedCategories.includes(category)) {
@@ -54,6 +66,7 @@ export default function Product() {
     setPriceRange([0, 1000]);
     setSearchTerm("");
     setPriceInputState([0, 0]);
+    setSort("");
   };
 
   const handleChangePriceState = (value: string, index: 0 | 1) => {
@@ -69,7 +82,6 @@ export default function Product() {
   if (isError) {
     return <div>Something went wrong while fetching product</div>;
   }
-  console.log(data);
 
   return (
     <div className="container mx-auto px-4 py-8 sm:px-6 md:py-12 min-h-[100vh]">
@@ -89,29 +101,29 @@ export default function Product() {
             <div className="space-y-2">
               <div className="flex items-center">
                 <Checkbox
-                  checked={selectedCategories.includes("Shirts")}
-                  onCheckedChange={() => handleCategoryChange("Shirts")}
+                  checked={selectedCategories.includes("shirts")}
+                  onCheckedChange={() => handleCategoryChange("shirts")}
                 />
                 <span className="ml-2">Shirts</span>
               </div>
               <div className="flex items-center">
                 <Checkbox
-                  checked={selectedCategories.includes("Accessories")}
-                  onCheckedChange={() => handleCategoryChange("Accessories")}
+                  checked={selectedCategories.includes("accessories")}
+                  onCheckedChange={() => handleCategoryChange("accessories")}
                 />
                 <span className="ml-2">Accessories</span>
               </div>
               <div className="flex items-center">
                 <Checkbox
-                  checked={selectedCategories.includes("Shorts")}
-                  onCheckedChange={() => handleCategoryChange("Shorts")}
+                  checked={selectedCategories.includes("shorts")}
+                  onCheckedChange={() => handleCategoryChange("shorts")}
                 />
                 <span className="ml-2">Shorts</span>
               </div>
               <div className="flex items-center">
                 <Checkbox
-                  checked={selectedCategories.includes("Pants")}
-                  onCheckedChange={() => handleCategoryChange("Pants")}
+                  checked={selectedCategories.includes("pants")}
+                  onCheckedChange={() => handleCategoryChange("pants")}
                 />
                 <span className="ml-2">Pants</span>
               </div>
@@ -154,22 +166,18 @@ export default function Product() {
           <div className="mb-6 flex items-center justify-between">
             <h1 className="text-2xl font-bold">Products</h1>
             <div className="flex items-center gap-4">
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="flex items-center gap-2">
-                    <ListOrderedIcon className="h-4 w-4" />
-                    Sort
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-48">
-                  <DropdownMenuLabel>Sort By</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>Price: Low to High</DropdownMenuItem>
-                  <DropdownMenuItem>Price: High to Low</DropdownMenuItem>
-                  <DropdownMenuItem>Newest</DropdownMenuItem>
-                  <DropdownMenuItem>Oldest</DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <Select onValueChange={(e) => setSort(e)} value={sort}>
+                <SelectTrigger>
+                  <ListOrderedIcon className="h-4 w-4" />{" "}
+                  <SelectValue placeholder="Sort prodct" />
+                </SelectTrigger>
+                <SelectGroup className="w-[100px]">
+                  <SelectContent>
+                    <SelectItem value="price">Price: Low to High</SelectItem>
+                    <SelectItem value="-price">Price: High to Low</SelectItem>
+                  </SelectContent>
+                </SelectGroup>
+              </Select>
             </div>
           </div>
           <div className="griProductResponsive w-full gap-[15px]">
@@ -210,7 +218,7 @@ export default function Product() {
   );
 }
 
-function ListOrderedIcon(props) {
+function ListOrderedIcon(props: any) {
   return (
     <svg
       {...props}

@@ -1,6 +1,6 @@
+import { IProduct } from "@/types";
 import { trimText } from "@/utils/trimText";
 import { Link } from "react-router-dom";
-import { IProduct } from "../mock/product";
 import ProductAddToCartBtn from "./ProductAddToCartBtn";
 import ProductTooltip from "./ProductTooltip";
 
@@ -49,7 +49,15 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           </div>
         </div>
       </div>
-      <ProductAddToCartBtn product={product} />
+      <div className="w-full center gap-[10px] px-[10px]">
+        <Link
+          className="w-full border-[1px] border-primaryMat center gap-[5px] rounded-[5px] ] mx-auto  text-primaryMat font-bold py-2 prounded hover:bg-primaryMat hover:text-white"
+          to={`porduct/${product._id}`}
+        >
+          View
+        </Link>
+        <ProductAddToCartBtn product={product} />
+      </div>
     </div>
   );
 };
