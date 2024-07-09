@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/select";
 import { useGetAllProductQuery } from "@/redux/features/product/product.api";
 import { IProduct } from "@/types";
+import { capitalized } from "@/utils/capitalizedWord";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
@@ -99,6 +100,17 @@ export default function Product() {
           <div>
             <h3 className="mb-2 text-lg font-medium">Categories</h3>
             <div className="space-y-2">
+              {category ? (
+                <div className="flex items-center">
+                  <Checkbox
+                    checked={selectedCategories.includes(category)}
+                    onCheckedChange={() => handleCategoryChange(category)}
+                  />
+                  <span className="ml-2">{capitalized(category)}</span>
+                </div>
+              ) : (
+                ""
+              )}
               <div className="flex items-center">
                 <Checkbox
                   checked={selectedCategories.includes("shirts")}
@@ -113,6 +125,7 @@ export default function Product() {
                 />
                 <span className="ml-2">Accessories</span>
               </div>
+
               <div className="flex items-center">
                 <Checkbox
                   checked={selectedCategories.includes("shorts")}
