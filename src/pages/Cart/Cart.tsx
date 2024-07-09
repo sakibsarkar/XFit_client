@@ -6,6 +6,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
 import {
   Table,
@@ -22,6 +31,7 @@ import {
 } from "@/redux/features/cart/cart.slice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { trimText } from "@/utils/trimText";
+import { DialogDescription } from "@radix-ui/react-dialog";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Cart() {
@@ -64,6 +74,7 @@ export default function Cart() {
                     <TableHead>Quantity</TableHead>
                     <TableHead>Price</TableHead>
                     <TableHead>Total</TableHead>
+                    <TableHead>Action</TableHead>
                     <TableHead />
                   </TableRow>
                 </TableHeader>
@@ -114,14 +125,37 @@ export default function Cart() {
                         ${(item.price * item.quantity).toFixed(2)}
                       </TableCell>
                       <TableCell className="hidden md:table-cell">
-                        <Button
-                          variant="outline"
-                          size="icon"
-                          onClick={() => handleRemoveFromCart(item._id)}
-                        >
-                          <TrashIcon className="h-4 w-4" />
-                          <span className="sr-only">Remove</span>
-                        </Button>
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            <Button variant="outline" size="icon">
+                              <TrashIcon className="h-4 w-4" />
+                              <span className="sr-only">Remove</span>
+                            </Button>
+                          </DialogTrigger>
+                          <DialogContent className="sm:max-w-[425px]">
+                            <DialogHeader>
+                              <DialogTitle>Confirm Action</DialogTitle>
+                              <DialogDescription>
+                                Are you sure you want to proceed with this
+                                action? This cannot be undone.
+                              </DialogDescription>
+                            </DialogHeader>
+                            <DialogFooter>
+                              <DialogClose asChild>
+                                <Button type="button" variant="outline">
+                                  Cancel
+                                </Button>
+                              </DialogClose>
+                              <Button
+                                variant="destructive"
+                                className="ml-auto"
+                                onClick={() => handleRemoveFromCart(item._id)}
+                              >
+                                Confirm
+                              </Button>
+                            </DialogFooter>
+                          </DialogContent>
+                        </Dialog>
                       </TableCell>
                     </TableRow>
                   ))}
