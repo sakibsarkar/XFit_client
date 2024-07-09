@@ -20,8 +20,8 @@ const navLinks = [
     href: "/product",
   },
   {
-    lebel: "Contact",
-    href: "/s",
+    lebel: "Product Manage",
+    href: "/manage-product",
   },
   {
     lebel: "Support",

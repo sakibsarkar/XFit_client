@@ -78,7 +78,6 @@ const cartSlice = createSlice({
           toast.error("Maximum product quantity reached");
         } else {
           product.quantity = willQuantity;
-          toast.success("Product quantity increased");
         }
       }
       state.total = state.items.reduce(

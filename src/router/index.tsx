@@ -4,6 +4,7 @@ import Checkout from "@/pages/Checkout/Checkout";
 import Home from "@/pages/Home/Home";
 import Product from "@/pages/Product/Product";
 import ProductDetail from "@/pages/ProductDetail/ProductDetail";
+import ProductManageMent from "@/pages/ProductManageMent/ProductManageMent";
 
 import NotFound from "@/pages/shared/NotFound";
 import { createBrowserRouter } from "react-router-dom";
@@ -35,6 +36,11 @@ const router = createBrowserRouter([
         index: true,
         path: "checkout",
         element: <Checkout />,
+      },
+      {
+        index: true,
+        path: "manage-product",
+        element: <ProductManageMent />,
       },
       {
         path: "*",

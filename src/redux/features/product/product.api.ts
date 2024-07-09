@@ -43,7 +43,7 @@ const productAPI = baseApi.injectEndpoints({
         console.log({ category, categories });
 
         return {
-          url: `/product?searchTerm=${searchTerm}&min=${min}&max=${max}&sort=${sort}&category=${categories} &page=${
+          url: `/product?searchTerm=${searchTerm}&min=${min}&max=${max}&sort=${sort}&category=${categories}&page=${
             page || "1"
           }`,
           method: "GET",
@@ -57,6 +57,20 @@ const productAPI = baseApi.injectEndpoints({
         method: "GET",
       }),
       providesTags: ["product"],
+    }),
+    updateProductById: builder.mutation({
+      query: ({
+        productId,
+        payload,
+      }: {
+        productId: string;
+        payload: Partial<IProduct>;
+      }) => ({
+        url: `/product/update/${productId}`,
+        method: "PUT",
+        body: payload,
+      }),
+      invalidatesTags: ["product"],
     }),
     orderManyProduct: builder.mutation({
       query: (payload) => ({
@@ -74,4 +88,5 @@ export const {
   useGetAllProductQuery,
   useGetProductByIdQuery,
   useOrderManyProductMutation,
+  useUpdateProductByIdMutation,
 } = productAPI;
