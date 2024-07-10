@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/table";
 import { useGetAllProductQuery } from "@/redux/features/product/product.api";
 import { Link } from "react-router-dom";
+import CreateProductModal from "./CreateProductModal";
 import DeleteProductModal from "./DeleteProductModal";
 import EditProductModal from "./EditProductModal";
 
@@ -19,12 +20,7 @@ const ProductManageMent = () => {
     <div className="flex flex-col gap-6 p-6 container min-h-screen">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Product Management</h1>
-        <Link
-          to="#"
-          className="rounded-md bg-primary px-4 py-2 text-primary-foreground"
-        >
-          Add Product
-        </Link>
+        <CreateProductModal />
       </div>
       <div className="overflow-x-auto">
         <Table>
