@@ -1,11 +1,12 @@
 import { useGetFeaturedProductsQuery } from "@/redux/features/product/product.api";
+import Loader from "@/utils/Loader";
 import ProductCard from "../product/ProductCard";
 import SectionHeading from "../ui/sectionHeading";
 
 const FeaturedProduct = () => {
   const { data, isLoading } = useGetFeaturedProductsQuery(undefined);
   if (isLoading) {
-    return <div>loading...</div>;
+    return <Loader />;
   }
   return (
     <section className="w-full mt-[50px]">

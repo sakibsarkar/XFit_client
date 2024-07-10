@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 import { ICategory } from "@/types";
-import { categories } from "../mock/categories";
+import { categories } from "../../mock/categories";
 import SectionHeading from "../ui/sectionHeading";
 
 const Categories = () => {

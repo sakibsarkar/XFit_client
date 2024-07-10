@@ -101,3 +101,12 @@ body {
   transform: scale(1.03);
   border-radius: 10px;
 }
+
+.footerBoxGradient {
+  background: rgb(43, 164, 109);
+  background: linear-gradient(
+    90deg,
+    rgba(43, 164, 109, 1) 0%,
+    rgba(39, 121, 83, 1) 100%
+  );
+}

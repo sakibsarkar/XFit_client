@@ -1,4 +1,5 @@
 import CompanyOverview from "@/components/AboutUs/CompanyOverview";
+import ContactUs from "@/components/AboutUs/ContactUs";
 import CustomreTestimonial from "@/components/AboutUs/CustomreTestimonial";
 import OurTeam from "@/components/AboutUs/OurTeam";
 
@@ -9,6 +10,7 @@ const AboutUsView = () => {
         <CompanyOverview />
         <OurTeam />
         <CustomreTestimonial />
+        <ContactUs />
       </main>
     </div>
   );

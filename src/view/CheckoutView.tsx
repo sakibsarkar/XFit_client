@@ -23,8 +23,6 @@ const initialValues = {
   phone: "",
 };
 
-type TFormValues = typeof initialValues;
-
 const CheckoutView = () => {
   const { total, items } = useAppSelector((state) => state.cart);
   const [confirmOrder] = useOrderManyProductMutation();
@@ -42,7 +40,7 @@ const CheckoutView = () => {
       .required("Phone is required")
       .matches(/^\d+$/, "Phone must be a number"),
   });
-  const handleSubmit = async (value: TFormValues) => {
+  const handleSubmit = async () => {
     const toastId = toast.loading("Please wait...");
     try {
       const { data } = await confirmOrder({ cartItems: items });

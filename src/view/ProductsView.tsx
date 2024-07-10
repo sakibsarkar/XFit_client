@@ -18,9 +18,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import ListOrderedIcon from "@/icons/ListOrderedIcon";
+import { categories } from "@/mock/categories";
 import { useGetAllProductQuery } from "@/redux/features/product/product.api";
 import { IProduct } from "@/types";
 import { capitalized } from "@/utils/capitalizedWord";
+import Loader from "@/utils/Loader";
 import debounce from "lodash/debounce";
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
@@ -91,7 +93,7 @@ const ProductsView = () => {
   };
 
   if (isLoading) {
-    return <div>loading....</div>;
+    return <Loader className="!h-[100vh]" />;
   }
   if (isError) {
     return <div>Something went wrong while fetching product</div>;
@@ -123,35 +125,15 @@ const ProductsView = () => {
               ) : (
                 ""
               )}
-              <div className="flex items-center">
-                <Checkbox
-                  checked={selectedCategories.includes("shirts")}
-                  onCheckedChange={() => handleCategoryChange("shirts")}
-                />
-                <span className="ml-2">Shirts</span>
-              </div>
-              <div className="flex items-center">
-                <Checkbox
-                  checked={selectedCategories.includes("accessories")}
-                  onCheckedChange={() => handleCategoryChange("accessories")}
-                />
-                <span className="ml-2">Accessories</span>
-              </div>
-
-              <div className="flex items-center">
-                <Checkbox
-                  checked={selectedCategories.includes("shorts")}
-                  onCheckedChange={() => handleCategoryChange("shorts")}
-                />
-                <span className="ml-2">Shorts</span>
-              </div>
-              <div className="flex items-center">
-                <Checkbox
-                  checked={selectedCategories.includes("pants")}
-                  onCheckedChange={() => handleCategoryChange("pants")}
-                />
-                <span className="ml-2">Pants</span>
-              </div>
+              {categories.slice(0, 4).map(({ label, value }, i) => (
+                <div className="flex items-center" key={i + "category"}>
+                  <Checkbox
+                    checked={selectedCategories.includes(value)}
+                    onCheckedChange={() => handleCategoryChange(value)}
+                  />
+                  <span className="ml-2">{label}</span>
+                </div>
+              ))}
             </div>
           </div>
           <div>
@@ -218,7 +200,7 @@ const ProductsView = () => {
           )}
         </div>
       </div>
-      <Pagination>
+      <Pagination className="mt-[20px]">
         <PaginationContent>
           {Array.from({ length: Math.ceil((data?.totalDoc || 0) / 10) }).map(
             (_, i) => (
