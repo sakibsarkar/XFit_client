@@ -12,9 +12,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import UploadIcon from "@/icons/UploadIcon";
 import { useUpdateProductByIdMutation } from "@/redux/features/product/product.api";
 import { IProduct } from "@/types";
+import { uploadImg } from "@/utils/imageUpload";
 import { useFormik } from "formik";
+import React, { useState } from "react";
 import { toast } from "sonner";
 import * as Yup from "yup";
 
@@ -42,11 +45,14 @@ const validationSchema = Yup.object().shape({
 const EditProductModal = ({ product }: { product: IProduct }) => {
   const [updateProduct] = useUpdateProductByIdMutation();
 
+  const [productImg, setProductImage] = useState(product.image);
+
   const handleSubmit = async (value: TFormValues) => {
     const payload = {
       ...value,
       price: Number(value.price),
       stock: Number(value.stock),
+      image: productImg,
     };
     const modalCloseBtn = document.getElementById(
       "edit-modal-close"
@@ -84,6 +90,23 @@ const EditProductModal = ({ product }: { product: IProduct }) => {
     validationSchema: validationSchema,
     onSubmit: handleSubmit,
   });
+
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files;
+    if (!file) return toast.error("Please select another image");
+    const toastId = toast.loading("Please wait uploading your image...");
+    try {
+      const { display_url } = await uploadImg(file[0]);
+      setProductImage(display_url);
+      toast.message("Image uploaded successfully");
+      toast.dismiss(toastId);
+    } catch {
+      toast.dismiss(toastId);
+      toast.error(
+        "Something went while uploading this image, please use another image format"
+      );
+    }
+  };
 
   return (
     <Dialog>
@@ -168,6 +191,29 @@ const EditProductModal = ({ product }: { product: IProduct }) => {
                   <div className="text-red-500">{formik.errors.stock}</div>
                 ) : null}
               </div>
+            </div>
+            <div className="flex items-start justify-start gap-[8px] flex-col">
+              <Label htmlFor="image">Image *</Label>
+              <div className="flex items-center gap-[5px]">
+                <img
+                  src={productImg}
+                  className="w-[100px] h-[100px] object-cover"
+                />
+                <label
+                  htmlFor="image"
+                  className="h-fit p-[10px] border-[1px] border-borderColor rounded-[8px] center cursor-pointer"
+                >
+                  <UploadIcon className="h-4 w-4" />
+                </label>
+              </div>
+              <Input
+                id="image"
+                name="image"
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                className="invisible"
+              />
             </div>
           </div>
           <DialogFooter>
