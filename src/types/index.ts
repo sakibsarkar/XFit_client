@@ -3,6 +3,7 @@ import { IconType } from "react-icons/lib";
 export interface ICategory {
   label: string;
   Icon: IconType;
+  value: string;
 }
 export interface IProduct {
   image: string;

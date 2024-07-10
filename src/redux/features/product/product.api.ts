@@ -58,6 +58,13 @@ const productAPI = baseApi.injectEndpoints({
       }),
       providesTags: ["product"],
     }),
+    getFeaturedProducts: builder.query<{ data: IProduct[] }, undefined>({
+      query: () => ({
+        url: `/product/featured`,
+        method: "GET",
+      }),
+      providesTags: ["product"],
+    }),
     updateProductById: builder.mutation({
       query: ({
         productId,
@@ -97,4 +104,5 @@ export const {
   useOrderManyProductMutation,
   useDeleteProductByIdMutation,
   useUpdateProductByIdMutation,
+  useGetFeaturedProductsQuery,
 } = productAPI;

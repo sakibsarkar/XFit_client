@@ -1,8 +1,4 @@
-"use client";
-
 import { Link } from "react-router-dom";
-
-// import "slick-carousel/slick/slick-theme.css";
 
 import { ICategory } from "@/types";
 import { categories } from "../mock/categories";
@@ -22,13 +18,12 @@ const Categories = () => {
   );
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
 const CategoryCard = ({ data }: { data: ICategory }) => {
   const { Icon, label } = data;
 
   return (
     <Link
-      to={`/product?category=${data.label}`}
+      to={`/product?category=${data.value}`}
       className="w-full h-[150px] center flex-col gap-[15px] rounded-[8px] hover:shadow-lg hover:border-primaryTxt border-[1px] border-transparent duration-[0.3s] shadow-md"
       style={{ background: "white" }}
     >

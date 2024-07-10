@@ -15,7 +15,7 @@ import { Textarea } from "@/components/ui/textarea";
 import UploadIcon from "@/icons/UploadIcon";
 import { useCreateProductMutation } from "@/redux/features/product/product.api";
 import { uploadImg } from "@/utils/imageUpload";
-import { useFormik } from "formik";
+import { FormikHelpers, FormikValues, useFormik } from "formik";
 import { toast } from "sonner";
 import * as Yup from "yup";
 
@@ -54,7 +54,10 @@ const validationSchema = Yup.object({
 const CreateProductModal = () => {
   const [createProduct] = useCreateProductMutation();
 
-  const handelSubmit = async (values: TFormValues) => {
+  const handelSubmit = async (
+    values: TFormValues,
+    { resetForm }: FormikHelpers<FormikValues>
+  ) => {
     const modalCloseBtn = document.getElementById(
       "create-modal-close"
     ) as HTMLElement;
@@ -80,6 +83,7 @@ const CreateProductModal = () => {
       toast.error("Something went wrong");
     } finally {
       toast.dismiss(toastId);
+      resetForm && resetForm();
     }
     modalCloseBtn.click();
   };
@@ -87,7 +91,8 @@ const CreateProductModal = () => {
   const formik = useFormik({
     initialValues,
     validationSchema,
-    onSubmit: handelSubmit,
+    onSubmit: (val, option) =>
+      handelSubmit(val, option as FormikHelpers<FormikValues>),
   });
 
   return (
