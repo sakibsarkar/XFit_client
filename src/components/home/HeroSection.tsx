@@ -16,7 +16,7 @@ export const RenderNewLine = ({ text }: { text: string }) => {
     </span>
   ));
 };
-export function HeroSection() {
+const HeroSection = () => {
   const sliderData = [
     {
       id: 1,
@@ -92,4 +92,5 @@ export function HeroSection() {
       </Carousel>
     </div>
   );
-}
+};
+export default HeroSection;

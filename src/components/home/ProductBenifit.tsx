@@ -3,7 +3,7 @@ import RocketIcon from "@/icons/RocketIcon";
 import ScalingIcon from "@/icons/ScalingIcon";
 import ShieldIcon from "@/icons/ShieldIcon";
 
-export default function ProductBenifit() {
+const ProductBenifit = () => {
   return (
     <section className="w-full mt-[120px]">
       <div className="grid gap-6 md:gap-12 lg:grid-cols-2  items-start">
@@ -78,4 +78,5 @@ export default function ProductBenifit() {
       </div>
     </section>
   );
-}
+};
+export default ProductBenifit;

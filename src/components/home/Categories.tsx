@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 
 // import "slick-carousel/slick/slick-theme.css";
 
-import { categories, ICategory } from "../mock/categories";
+import { ICategory } from "@/types";
+import { categories } from "../mock/categories";
 import SectionHeading from "../ui/sectionHeading";
 
 const Categories = () => {
@@ -22,7 +23,7 @@ const Categories = () => {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
-function CategoryCard({ data }: { data: ICategory }) {
+const CategoryCard = ({ data }: { data: ICategory }) => {
   const { Icon, label } = data;
 
   return (
@@ -39,6 +40,6 @@ function CategoryCard({ data }: { data: ICategory }) {
       </div>
     </Link>
   );
-}
+};
 
 export default Categories;

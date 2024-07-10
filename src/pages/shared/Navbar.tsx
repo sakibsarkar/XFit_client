@@ -24,8 +24,8 @@ const navLinks = [
     href: "/manage-product",
   },
   {
-    lebel: "Support",
-    href: "/fs",
+    lebel: "About Us",
+    href: "/aboutus",
   },
   {
     lebel: "Blog",
@@ -33,7 +33,7 @@ const navLinks = [
   },
 ];
 
-export default function Navbar() {
+const Navbar = () => {
   const [showSidebar, setShowSidebar] = useState(false);
   const { items, total } = useAppSelector((state) => state.cart);
   useEffect(() => {
@@ -140,4 +140,5 @@ export default function Navbar() {
       </div>
     </div>
   );
-}
+};
+export default Navbar;

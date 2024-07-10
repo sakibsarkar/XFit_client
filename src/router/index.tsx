@@ -1,6 +1,8 @@
 import MainLayout from "@/components/Layouts/MainLayouts";
+import AboutUs from "@/pages/AboutUs/AboutUs";
 import Cart from "@/pages/Cart/Cart";
 import Checkout from "@/pages/Checkout/Checkout";
+
 import Home from "@/pages/Home/Home";
 import Product from "@/pages/Product/Product";
 import ProductDetail from "@/pages/ProductDetail/ProductDetail";
@@ -41,6 +43,11 @@ const router = createBrowserRouter([
         index: true,
         path: "manage-product",
         element: <ProductManageMent />,
+      },
+      {
+        index: true,
+        path: "aboutus",
+        element: <AboutUs />,
       },
       {
         path: "*",
