@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -9,13 +8,12 @@ import {
 } from "@/components/ui/table";
 import { useGetAllProductQuery } from "@/redux/features/product/product.api";
 import { Link } from "react-router-dom";
+import DeleteProductModal from "./DeleteProductModal";
 import EditProductModal from "./EditProductModal";
 
 const ProductManageMent = () => {
   const { data } = useGetAllProductQuery({});
   // const [currentPage, setCurrentPage] = useState(1);
-
-  const handleDelete = () => {};
 
   return (
     <div className="flex flex-col gap-6 p-6 container min-h-screen">
@@ -72,13 +70,7 @@ const ProductManageMent = () => {
                 <TableCell>
                   <div className="flex items-center gap-2">
                     <EditProductModal product={product} />
-                    <Button
-                      size="sm"
-                      variant="secondary"
-                      onClick={() => handleDelete()}
-                    >
-                      Delete
-                    </Button>
+                    <DeleteProductModal productId={product._id} />
                   </div>
                 </TableCell>
               </TableRow>

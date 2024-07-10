@@ -72,6 +72,13 @@ const productAPI = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["product"],
     }),
+    deleteProductById: builder.mutation({
+      query: (productId: string) => ({
+        url: `/product/delete/${productId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["product"],
+    }),
     orderManyProduct: builder.mutation({
       query: (payload) => ({
         url: `/product/order-many`,
@@ -88,5 +95,6 @@ export const {
   useGetAllProductQuery,
   useGetProductByIdQuery,
   useOrderManyProductMutation,
+  useDeleteProductByIdMutation,
   useUpdateProductByIdMutation,
 } = productAPI;
