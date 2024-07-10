@@ -1,4 +1,5 @@
 import ProductCard from "@/components/product/ProductCard";
+import ProductNotFound from "@/components/product/ProductsNotFound";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
@@ -7,8 +8,6 @@ import {
   PaginationContent,
   PaginationItem,
   PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
 } from "@/components/ui/pagination";
 import {
   Select,
@@ -206,18 +205,21 @@ const ProductsView = () => {
               </Select>
             </div>
           </div>
-          <div className="griProductResponsive w-full gap-[15px]">
-            {data?.data?.map((data, i) => (
-              <ProductCard product={data as IProduct} key={i + "prodcut"} />
-            ))}
-          </div>
+          {data?.data?.length && data?.data?.length > 0 ? (
+            <div className="griProductResponsive w-full gap-[15px]">
+              <>
+                {data?.data?.map((data, i) => (
+                  <ProductCard product={data as IProduct} key={i + "prodcut"} />
+                ))}
+              </>
+            </div>
+          ) : (
+            <ProductNotFound />
+          )}
         </div>
       </div>
       <Pagination>
         <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious href="#" />
-          </PaginationItem>
           {Array.from({ length: Math.ceil((data?.totalDoc || 0) / 10) }).map(
             (_, i) => (
               <PaginationItem key={i + "page"}>
@@ -234,10 +236,6 @@ const ProductsView = () => {
               </PaginationItem>
             )
           )}
-
-          <PaginationItem>
-            <PaginationNext onClick={() => alert("next")} />
-          </PaginationItem>
         </PaginationContent>
       </Pagination>
     </div>
