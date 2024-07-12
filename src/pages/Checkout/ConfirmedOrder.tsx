@@ -7,6 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import CircleCheckIcon from "@/icons/CircleCheckoutIcon";
 import { format } from "date-fns";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -71,24 +72,5 @@ const ConfirmedOrder = () => {
     </div>
   );
 };
-function CircleCheckIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <circle cx="12" cy="12" r="10" />
-      <path d="m9 12 2 2 4-4" />
-    </svg>
-  );
-}
 
 export default ConfirmedOrder;
