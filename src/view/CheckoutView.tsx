@@ -12,20 +12,28 @@ import { useOrderManyProductMutation } from "@/redux/features/product/product.ap
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useFormik } from "formik";
 import { CreditCardIcon, DollarSignIcon } from "lucide-react";
+import { useState } from "react";
+import PhoneInput, {
+  isPossiblePhoneNumber,
+  isValidPhoneNumber,
+} from "react-phone-number-input";
+import "react-phone-number-input/style.css";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import * as Yup from "yup";
-
 const initialValues = {
   name: "",
   email: "",
   address: "",
-  phone: "",
 };
 
 const CheckoutView = () => {
   const { total, items } = useAppSelector((state) => state.cart);
+  const [paymentMethod, setPaymentMethodd] = useState<"cash" | "card">("card");
   const [confirmOrder] = useOrderManyProductMutation();
+
+  const [phone, setPhone] = useState("");
+
   const dispatch = useAppDispatch();
 
   const naviagate = useNavigate();
@@ -36,11 +44,19 @@ const CheckoutView = () => {
       .email("Invalid email format")
       .required("email is required"),
     address: Yup.string().required("Address is required"),
-    phone: Yup.string()
-      .required("Phone is required")
-      .matches(/^\d+$/, "Phone must be a number"),
   });
   const handleSubmit = async () => {
+    if (
+      phone &&
+      (!isPossiblePhoneNumber(phone) || !isValidPhoneNumber(phone))
+    ) {
+      return toast.error("Invalid Phone number");
+    }
+
+    if (paymentMethod === "card") {
+      return naviagate("/payment");
+    }
+
     const toastId = toast.loading("Please wait...");
     try {
       const { data } = await confirmOrder({ cartItems: items });
@@ -53,7 +69,7 @@ const CheckoutView = () => {
 
       toast.success("Order confirmed");
       dispatch(clearCart(undefined));
-      naviagate("/");
+      naviagate("/confirm");
     } catch (error) {
       toast.error("Something went wrong please tru again");
     } finally {
@@ -125,17 +141,17 @@ const CheckoutView = () => {
             </div>
             <div className="grid gap-2">
               <Label htmlFor="phone">Phone</Label>
-              <Input
+
+              <PhoneInput
                 id="phone"
                 name="phone"
+                defaultCountry="BD"
+                international
+                countryCallingCodeEditable={false}
                 placeholder="Enter your phone number"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.phone}
+                onChange={(e) => setPhone(e as string)}
+                className="flex  w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
               />
-              {formik.touched.phone && formik.errors.phone ? (
-                <div className="text-red-600">{formik.errors.phone}</div>
-              ) : null}
             </div>
             <Button
               type="submit"
@@ -153,7 +169,8 @@ const CheckoutView = () => {
             </CardHeader>
             <CardContent>
               <RadioGroup
-                defaultValue="cash"
+                onValueChange={(e) => setPaymentMethodd(e as "cash" | "card")}
+                defaultValue={paymentMethod}
                 className="grid grid-cols-2 gap-4"
               >
                 <div>
@@ -172,7 +189,6 @@ const CheckoutView = () => {
                 </div>
                 <div>
                   <RadioGroupItem
-                    disabled={true}
                     value="card"
                     id="payment-card"
                     className="peer sr-only"

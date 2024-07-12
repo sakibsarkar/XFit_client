@@ -110,3 +110,7 @@ body {
     rgba(39, 121, 83, 1) 100%
   );
 }
+
+.PhoneInputInput {
+  outline: none;
+}

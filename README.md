@@ -58,6 +58,7 @@ Create a .env file in the root directory of the project and add your MongoDB cre
 ```
 VITE_IMGBB_KEY=imgbb api key
 VITE_BASE_API=https://xfit-backend.vercel.app/api/v1
+VITE_STRIPE_PUBLISHABLE_KEY=your stripe Publish key
 ```
 
 ### Running the Project
