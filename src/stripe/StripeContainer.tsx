@@ -34,6 +34,10 @@ const StripeContainer = () => {
   const elements = useElements();
   const stripe = useStripe();
 
+  if (!total) {
+    navigate("/");
+  }
+
   const handlePayment = async (event: React.FormEvent) => {
     event.preventDefault();
     if (loading) {
@@ -107,6 +111,7 @@ const StripeContainer = () => {
         }
 
         toast.success("Order confirmed");
+        localStorage.setItem("amount", total.toString());
         dispatch(clearCart(undefined));
         navigate("/confirm");
       }

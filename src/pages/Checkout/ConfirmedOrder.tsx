@@ -13,7 +13,9 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const ConfirmedOrder = () => {
-  const total = localStorage.getItem("ammount");
+  const total = localStorage.getItem("amount");
+  console.log(total);
+
   const navigate = useNavigate();
   console.log(total);
 
@@ -21,7 +23,7 @@ const ConfirmedOrder = () => {
     if (!total) {
       navigate("/");
     }
-  });
+  }, [total, navigate]);
 
   const handleGotoHome = () => {
     localStorage.removeItem("ammount");

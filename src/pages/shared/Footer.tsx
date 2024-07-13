@@ -7,11 +7,11 @@ const Footer = () => {
       <div className="w-full">
         <div className="py-14 grid grid-cols-12 gap-x-5 gap-y-8">
           <div className="col-span-full xl:col-span-3 relative footerBoxGradient rounded-2xl gap-12 p-6 xl:w-72 h-96 flex flex-col justify-center items-center">
-            <a href="/" className="flex justify-center lg:justify-start">
+            <Link to="/" className="flex justify-center lg:justify-start">
               <span className="italic text-white font-[700] text-[35px]">
                 XFITNESS
               </span>
-            </a>
+            </Link>
             <p className="text-center text-gray-200">
               Trusted in more than 100 countries & 5 million customers. Have any
               query? contact us we are here for you.
@@ -116,9 +116,9 @@ const Footer = () => {
                   <path
                     d="M1.5 6.88281L14.8333 6.88281M10.6667 11.8828L15.0774 7.47207C15.3552 7.19429 15.4941 7.0554 15.4941 6.88281C15.4941 6.71022 15.3552 6.57133 15.0774 6.29356L10.6667 1.88281"
                     stroke="white"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                 </svg>
               </button>
@@ -130,7 +130,7 @@ const Footer = () => {
         <div className="flex items-center justify-center">
           <span className="text-sm text-gray-800 ">
             Copyright@2024 All Right Reserved by
-            <a href="/">XFit</a>
+            <Link to="/">XFit</Link>
           </span>
         </div>
       </div>

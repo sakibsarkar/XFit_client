@@ -1,5 +1,6 @@
 import { useGetFeaturedProductsQuery } from "@/redux/features/product/product.api";
 import Loader from "@/utils/Loader";
+import { Link } from "react-router-dom";
 import ProductCard from "../product/ProductCard";
 import SectionHeading from "../ui/sectionHeading";
 
@@ -16,6 +17,12 @@ const FeaturedProduct = () => {
           <ProductCard key={"prodcut" + i} product={data} />
         ))}
       </div>
+      <Link
+        to={"/product"}
+        className="w-fit mx-auto py-[8px] px-[20px] bg-primaryMat text-white rounded-[5px] center mt-[20px]"
+      >
+        Load more
+      </Link>
     </section>
   );
 };

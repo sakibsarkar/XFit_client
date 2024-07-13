@@ -79,7 +79,7 @@ const Navbar = () => {
               <div className="flex justify-end">
                 <NavigationMenuItem>
                   {navLinks.map(({ href, lebel }, i) => (
-                    <Link to={href} key={i}>
+                    <Link to={href} key={i + "navlink"}>
                       <NavigationMenuLink
                         className={navigationMenuTriggerStyle()}
                       >

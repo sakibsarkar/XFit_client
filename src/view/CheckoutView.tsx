@@ -37,7 +37,9 @@ const CheckoutView = () => {
   const dispatch = useAppDispatch();
 
   const naviagate = useNavigate();
-
+  if (!total) {
+    naviagate("/");
+  }
   const validationSchema = Yup.object({
     name: Yup.string().required("Name is required"),
     email: Yup.string()
@@ -46,10 +48,10 @@ const CheckoutView = () => {
     address: Yup.string().required("Address is required"),
   });
   const handleSubmit = async () => {
-    if (
-      phone &&
-      (!isPossiblePhoneNumber(phone) || !isValidPhoneNumber(phone))
-    ) {
+    if (!phone) {
+      return toast.error("Please enter your phone number");
+    }
+    if (!isPossiblePhoneNumber(phone) || !isValidPhoneNumber(phone)) {
       return toast.error("Invalid Phone number");
     }
 
@@ -68,6 +70,7 @@ const CheckoutView = () => {
       }
 
       toast.success("Order confirmed");
+      localStorage.setItem("amount", total.toString());
       dispatch(clearCart(undefined));
       naviagate("/confirm");
     } catch (error) {
